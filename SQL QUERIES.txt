@@ -1,0 +1,91 @@
+--SQL QUERIES(ORACLE):
+
+--customer table
+
+CREATE SEQUENCE customer_seq
+START WITH 1
+INCREMENT BY 1;
+
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY,
+    name VARCHAR2(50),
+    email VARCHAR2(50),
+    phone VARCHAR2(15),
+    address CLOB
+);
+
+CREATE OR REPLACE TRIGGER customers_trigger
+BEFORE INSERT ON customers
+FOR EACH ROW
+BEGIN
+    :NEW.customer_id := customer_seq.NEXTVAL;
+END;
+/
+
+
+--room table
+
+CREATE SEQUENCE room_seq
+START WITH 1
+INCREMENT BY 1;
+
+CREATE TABLE rooms (
+    room_id INT PRIMARY KEY,
+    room_type VARCHAR2(20),
+    price NUMBER(10, 2),
+    is_available NUMBER(1) DEFAULT 1
+);
+
+CREATE OR REPLACE TRIGGER room_trigger
+BEFORE INSERT ON rooms
+FOR EACH ROW
+BEGIN
+    :NEW.room_id := room_seq.NEXTVAL;
+END;
+/
+
+
+--staff table
+
+CREATE SEQUENCE staff_seq
+START WITH 1
+INCREMENT BY 1;
+
+CREATE TABLE staff (
+    staff_id INT PRIMARY KEY,
+    name VARCHAR2(50),
+    position VARCHAR2(50),
+    salary NUMBER(10, 2)
+);
+
+CREATE OR REPLACE TRIGGER staff_trigger
+BEFORE INSERT ON staff
+FOR EACH ROW
+BEGIN
+    :NEW.staff_id := staff_seq.NEXTVAL;
+END;
+/
+
+
+--Initialize room table
+
+INSERT INTO rooms (room_type, price) VALUES ('Single', 1000);
+INSERT INTO rooms (room_type, price) VALUES ('Single', 1000);
+INSERT INTO rooms (room_type, price) VALUES ('Single', 1000);
+INSERT INTO rooms (room_type, price) VALUES ('Double', 1700);
+INSERT INTO rooms (room_type, price) VALUES ('Double', 1700);
+INSERT INTO rooms (room_type, price) VALUES ('Double', 1700);
+INSERT INTO rooms (room_type, price) VALUES ('Family', 4000);
+INSERT INTO rooms (room_type, price) VALUES ('Family', 4000);
+INSERT INTO rooms (room_type, price) VALUES ('Deluxe', 3000);
+INSERT INTO rooms (room_type, price) VALUES ('Deluxe', 3000);
+
+
+
+--Initialize staff table
+
+INSERT INTO staff (name, position, salary) VALUES ('ajay', 'manager', 75000);
+INSERT INTO staff (name, position, salary) VALUES ('babu', 'plumber', 55000);
+INSERT INTO staff (name, position, salary) VALUES ('sheela', 'cleaner', 50000);
+INSERT INTO staff (name, position, salary) VALUES ('karthick', 'cleaner', 50000);
+
